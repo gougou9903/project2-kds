@@ -9,14 +9,14 @@
 #include "MKL25z4.h"
 
 void timer_init(){
-	MCG_BASE_PTR->C1 = MCG_C1_IREFS_MASK | MCG_C1_IRCLKEN_MASK;
-	MCG_BASE_PTR->C2 = MCG_C2_IRCS_MASK; // select fast internal clock
+	MCG_BASE_PTR->C1 = MCG_C1_CLKS_MASK ;
+	//MCG_BASE_PTR->C2 = MCG_C2_IRCS_MASK; // select fast internal clock
 
 	SIM_BASE_PTR->SCGC6 |= SIM_SCGC6_TPM2_MASK | SIM_SCGC6_TPM0_MASK;
-	SIM_BASE_PTR->SOPT2 |= SIM_SOPT2_TPMSRC(3); //select the clock to be the MCGIRCLK
+	SIM_BASE_PTR->SOPT2 |= SIM_SOPT2_TPMSRC(1); //select the clock to be the MCGIRCLK
 
 	//enable timer and set dividers
-	TPM2_BASE_PTR->SC = TPM0_BASE_PTR->SC = TPM_SC_CMOD(1) | TPM_SC_PS(0);
+	TPM2_BASE_PTR->SC = TPM0_BASE_PTR->SC = TPM_SC_CMOD(1) | TPM_SC_PS(4);
 	TPM2_BASE_PTR->MOD = TPM0_BASE_PTR->MOD = 10000;
 
 	//TPM2_BASE_PTR->SC |= TPM_SC_TOIE_MASK;
